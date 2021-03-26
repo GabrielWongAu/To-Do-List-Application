@@ -2,14 +2,15 @@ from models.Task import Task
 from datetime import datetime
 from main import db
 from schemas.TaskSchema import task_schema, tasks_schema
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, render_template
 
 tasks = Blueprint('tasks', __name__, url_prefix="/tasks")
 
 @tasks.route("/", methods=["GET"])
 def task_index():
     tasks = Task.query.all()
-    return jsonify(tasks_schema.dump(tasks))
+    # return jsonify(tasks_schema.dump(tasks))
+    return render_template("tasks_index.html", tasks = tasks)
 
 @tasks.route("/", methods=["POST"])
 def task_create():
@@ -32,7 +33,8 @@ def task_create():
 def task_show(id):
     # SELECT * FROM TASKS WHERE ID = id
     task = Task.query.get(id)
-    return jsonify(task_schema.dump(task))
+    # return jsonify(task_schema.dump(task))
+    return render_template("task.html", task_individual = task)
 
 @tasks.route("/<int:id>", methods=["DELETE"])
 def task_delete(id):

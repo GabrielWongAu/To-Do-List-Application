@@ -3,14 +3,15 @@ from models.Task import Task
 from main import db
 from schemas.ListSchema import list_schema, lists_schema
 from schemas.TaskSchema import task_schema, tasks_schema
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, render_template
 
 lists = Blueprint('lists', __name__, url_prefix="/lists")
 
 @lists.route("/", methods=["GET"])
 def list_index():
     lists = List.query.all()
-    return jsonify(lists_schema.dump(lists))
+    # return jsonify(lists_schema.dump(lists))
+    return render_template("lists_index.html", lists = lists)
 
 @lists.route("/", methods=["POST"])
 def list_create():
@@ -31,13 +32,15 @@ def list_create():
 def list_show(id):
     # SELECT * FROM LISTS WHERE ID = id
     list = List.query.get(id)
-    return jsonify(list_schema.dump(list))
+    #return jsonify(list_schema.dump(list))
+    return render_template("list.html", list_individual = list)
 
 @lists.route("/<int:id>/tasks", methods=["GET"])
 def list_tasks_show(id):
     # SELECT * FROM TASKS WHERE LIST_ID = id
     tasks = Task.query.filter_by(list_id=id)
-    return jsonify(tasks_schema.dump(tasks))
+    #return jsonify(tasks_schema.dump(tasks))
+    return render_template("tasks_index.html", tasks = tasks)
 
 @lists.route("/<int:id>", methods=["DELETE"])
 def list_delete(id):
