@@ -1,6 +1,10 @@
 from flask import Flask
 app = Flask(__name__)
 
-@app.route("/")
-def home_page():
-    return("To Do List Web App")
+from database import init_db
+db = init_db(app)
+
+from controllers import registerable_controllers
+
+for controller in registerable_controllers:
+    app.register_blueprint(controller)
