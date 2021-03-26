@@ -1,10 +1,8 @@
 from main import db
 from datetime import datetime
 
-class Task(db.Model):
-    __tablename__="tasks"
+class List(db.Model):
+    __tablename__="lists"
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String(), nullable=False)
     description = db.Column(db.String())
-    created = db.Column(db.DateTime, default=datetime.now)
-    list_id = db.Column(db.Integer, db.ForeignKey("lists.id"), nullable=False)

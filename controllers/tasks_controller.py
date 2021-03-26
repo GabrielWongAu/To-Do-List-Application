@@ -19,6 +19,7 @@ def task_create():
     new_task = Task()
     new_task.name = task_fields["name"]
     new_task.description = task_fields["description"]
+    new_task.list_id = task_fields["list_id"]
     new_task.created = datetime.now()
 
     #add a new task to the db
