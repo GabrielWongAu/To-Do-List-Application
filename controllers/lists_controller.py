@@ -1,6 +1,8 @@
 from models.List import List
+from models.Task import Task
 from main import db
 from schemas.ListSchema import list_schema, lists_schema
+from schemas.TaskSchema import task_schema, tasks_schema
 from flask import Blueprint, request, jsonify
 
 lists = Blueprint('lists', __name__, url_prefix="/lists")
@@ -30,6 +32,12 @@ def list_show(id):
     # SELECT * FROM LISTS WHERE ID = id
     list = List.query.get(id)
     return jsonify(list_schema.dump(list))
+
+@lists.route("/<int:id>/tasks", methods=["GET"])
+def list_tasks_show(id):
+    # SELECT * FROM TASKS WHERE LIST_ID = id
+    tasks = Task.query.filter_by(list_id=id)
+    return jsonify(tasks_schema.dump(tasks))
 
 @lists.route("/<int:id>", methods=["DELETE"])
 def list_delete(id):
