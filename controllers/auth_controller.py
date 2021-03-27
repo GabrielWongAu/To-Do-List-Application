@@ -4,6 +4,7 @@ from main import db
 from flask import Blueprint, request, jsonify, abort, render_template, redirect, url_for
 from main import bcrypt
 from flask_jwt_extended import create_access_token
+from flask_login import login_user, current_user, logout_user, login_required
 from datetime import timedelta
 
 auth = Blueprint('auth', __name__)
@@ -34,7 +35,7 @@ def auth_register():
     db.session.commit()
 
     # return jsonify(user_schema.dump(user))
-    return redirect(url_for('lists.list_index'))
+    return redirect(url_for('auth.login'))
 
 @auth.route("/auth/login", methods=["POST"])
 def auth_login():
@@ -53,6 +54,9 @@ def auth_login():
     if not bcrypt.check_password_hash(user.password, password):
         return abort(401, description="Incorrect password")
 
+    #print(current_user.username)
+    login_user(user)
+    print(current_user.username)
     # expiry = timedelta(days=1)
     # access_token = create_access_token(identity=str(user.id), expires_delta=expiry)
     # return jsonify({"token": access_token})
@@ -66,8 +70,14 @@ def signup():
 def login():
     return render_template('login.html')
 
-@auth.route("/users", methods=["GET"])
-def users_index():
-    users = User.query.all()
-    return jsonify(users_schema.dump(users))
-    #return render_template("lists_index.html", lists = lists)
+@auth.route("/logout", methods=['GET'])
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('lists.list_index'))
+
+# @auth.route("/users", methods=["GET"])
+# def users_index():
+#     users = User.query.all()
+#     return jsonify(users_schema.dump(users))
+#     #return render_template("lists_index.html", lists = lists)
