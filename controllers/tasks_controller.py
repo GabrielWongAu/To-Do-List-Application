@@ -12,8 +12,8 @@ tasks = Blueprint('tasks', __name__, url_prefix="/tasks")
 @tasks.route("/", methods=["GET"])
 def task_index():
     tasks = Task.query.all()
-    return jsonify(tasks_schema.dump(tasks))
-    #return render_template("tasks_index.html", tasks = tasks)
+    #return jsonify(tasks_schema.dump(tasks))
+    return render_template("tasks_index.html", tasks = tasks)
 
 @tasks.route("/", methods=["POST"])
 @jwt_required

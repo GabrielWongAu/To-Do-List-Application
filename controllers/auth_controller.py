@@ -1,14 +1,14 @@
 from models.User import User
 from schemas.UserSchema import user_schema, users_schema
 from main import db
-from flask import Blueprint, request, jsonify, abort, render_template
+from flask import Blueprint, request, jsonify, abort, render_template, redirect, url_for
 from main import bcrypt
 from flask_jwt_extended import create_access_token
 from datetime import timedelta
 
-auth = Blueprint('auth', __name__, url_prefix="/auth")
+auth = Blueprint('auth', __name__)
 
-@auth.route("/register", methods=["POST"])
+@auth.route("/auth/register", methods=["POST"])
 def auth_register():
     username = request.form.get('username')
     password = request.form.get('password')
@@ -33,27 +33,38 @@ def auth_register():
     db.session.add(user)
     db.session.commit()
 
-    return jsonify(user_schema.dump(user))
+    # return jsonify(user_schema.dump(user))
+    return redirect(url_for('lists.list_index'))
 
-@auth.route("/login", methods=["POST"])
+@auth.route("/auth/login", methods=["POST"])
 def auth_login():
-    user_fields = user_schema.load(request.json)
+    username = request.form.get('username')
+    password = request.form.get('password')
+    # print(username)
+    # print(password)
+    
+    # user_fields = user_schema.load(request.json)
 
-    user = User.query.filter_by(username=user_fields["username"]).first()
+    user = User.query.filter_by(username=username).first()
 
     # Do not login if the user does not exist
     if not user:
         return abort(401, description="Incorrect username")
-    if not bcrypt.check_password_hash(user.password, user_fields["password"]):
+    if not bcrypt.check_password_hash(user.password, password):
         return abort(401, description="Incorrect password")
 
-    expiry = timedelta(days=1)
-    access_token = create_access_token(identity=str(user.id), expires_delta=expiry)
-    return jsonify({"token": access_token})
+    # expiry = timedelta(days=1)
+    # access_token = create_access_token(identity=str(user.id), expires_delta=expiry)
+    # return jsonify({"token": access_token})
+    return redirect(url_for('lists.list_index'))
 
 @auth.route("/signup", methods=['GET'])
 def signup():
     return render_template('signup.html')
+
+@auth.route("/login", methods=['GET'])
+def login():
+    return render_template('login.html')
 
 @auth.route("/users", methods=["GET"])
 def users_index():
