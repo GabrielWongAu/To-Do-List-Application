@@ -19,7 +19,7 @@ def list_index():
 @lists.route("/", methods=["POST"])
 @jwt_required
 @verify_user
-def list_create(user=None):
+def list_create():
 
     list = List.query.filter_by(user_id=user.id).first()
 
@@ -44,20 +44,20 @@ def list_create(user=None):
 def list_show(id):
     # SELECT * FROM LISTS WHERE ID = id
     list = List.query.get(id)
-    #return jsonify(list_schema.dump(list))
-    return render_template("list.html", list_individual = list)
+    return jsonify(list_schema.dump(list))
+    #return render_template("list.html", list_individual = list)
 
 @lists.route("/<int:id>/tasks", methods=["GET"])
 def list_tasks_show(id):
     # SELECT * FROM TASKS WHERE LIST_ID = id
     tasks = Task.query.filter_by(list_id=id)
-    #return jsonify(tasks_schema.dump(tasks))
-    return render_template("tasks_index.html", tasks = tasks)
+    return jsonify(tasks_schema.dump(tasks))
+    #return render_template("tasks_index.html", tasks = tasks)
 
 @lists.route("/<int:id>", methods=["DELETE"])
 @jwt_required
 @verify_user
-def list_delete(id, user=None):
+def list_delete(id):
     # user_id = get_jwt_identity()
     # user = User.query.get(user_id)
 

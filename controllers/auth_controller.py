@@ -8,7 +8,7 @@ from datetime import timedelta
 
 auth = Blueprint('auth', __name__, url_prefix="/auth")
 
-@auth.route("/signup", methods=["POST"])
+@auth.route("/register", methods=["POST"])
 def auth_register():
     user_fields = user_schema.load(request.json)
 

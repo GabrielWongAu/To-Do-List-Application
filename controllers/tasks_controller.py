@@ -18,7 +18,7 @@ def task_index():
 @tasks.route("/", methods=["POST"])
 @jwt_required
 @verify_user
-def task_create(user=None):
+def task_create():
     list = List.query.filter_by(user_id=user.id).first()
 
     if not list:
