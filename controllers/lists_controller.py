@@ -7,6 +7,7 @@ from schemas.TaskSchema import task_schema, tasks_schema
 from flask import Blueprint, request, jsonify, render_template, abort
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from services.auth_service import verify_user
+from flask_login import login_required, current_user
 
 lists = Blueprint('lists', __name__, url_prefix="/lists")
 
@@ -17,28 +18,54 @@ def list_index():
     return render_template("lists_index.html", lists = lists)
 
 @lists.route("/", methods=["POST"])
-@jwt_required
-@verify_user
+@login_required
 def list_create():
 
-    list = List.query.filter_by(user_id=user.id).first()
+    name = request.form.get("name")
+    description = request.form.get("description")
 
-    if not list:
-        return abort(400, description= "Not authorized, you need to create a list first")
+    list = List.query.filter_by(user_id=current_user.id).first()
 
-    list_fields = list_schema.load(request.json)
+    if list:
+        return abort(400, description= "Not authorised to create more than one list")
+
+    #list_fields = list_schema.load(request.json)
 
     # create a new List object, with the data received in the request
     new_list = List()
-    new_list.name = list_fields["name"]
-    new_list.description = list_fields["description"]
-    new_list.user_id = user.id
+    new_list.name = name
+    new_list.description = description
+    new_list.user_id = current_user.id
 
     #add a new list to the db
     db.session.add(new_list)
     db.session.commit()
 
     return jsonify(list_schema.dump(new_list))
+
+# @lists.route("/", methods=["POST"])
+# @jwt_required
+# @verify_user
+# def list_create():
+
+#     list = List.query.filter_by(user_id=user.id).first()
+
+#     if not list:
+#         return abort(400, description= "Not authorized, you need to create a list first")
+
+#     list_fields = list_schema.load(request.json)
+
+#     # create a new List object, with the data received in the request
+#     new_list = List()
+#     new_list.name = list_fields["name"]
+#     new_list.description = list_fields["description"]
+#     new_list.user_id = user.id
+
+#     #add a new list to the db
+#     db.session.add(new_list)
+#     db.session.commit()
+
+#     return jsonify(list_schema.dump(new_list))
 
 @lists.route("/<int:id>", methods=["GET"])
 def list_show(id):
@@ -81,3 +108,8 @@ def list_update(id):
     lists.update(list_fields)
     db.session.commit()
     return jsonify(list_schema.dump(lists[0]))
+
+
+@lists.route("/new", methods=["GET"])
+def new_list():
+    return render_template("new_list.html")

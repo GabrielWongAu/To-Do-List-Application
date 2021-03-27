@@ -12,6 +12,7 @@
                 <a href="/lists">Home</a>
                 <a href="/tasks">View all Tasks</a>
                 {% if current_user.is_authenticated %}
+                <a href="/lists/new">Create a New List</a>
                 <a>{{ current_user.username }}</a>
                 <a href="/logout">Log out</a>
                 {% else %}
