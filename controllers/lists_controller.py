@@ -41,7 +41,8 @@ def list_create():
     db.session.add(new_list)
     db.session.commit()
 
-    return jsonify(list_schema.dump(new_list))
+    #return jsonify(list_schema.dump(new_list))
+    return redirect(url_for('lists.list_index'))
 
 # @lists.route("/", methods=["POST"])
 # @jwt_required
@@ -81,9 +82,9 @@ def list_tasks_show(id):
     #return jsonify(tasks_schema.dump(tasks))
     return render_template("tasks_index.html", tasks = tasks)
 
-@lists.route("/<int:id>", methods=["DELETE"])
-@jwt_required
-@verify_user
+#@lists.route("/<int:id>", methods=["DELETE"])
+@lists.route("/delete/<int:id>", methods=["GET"])
+@login_required
 def list_delete(id):
     # user_id = get_jwt_identity()
     # user = User.query.get(user_id)
@@ -92,14 +93,15 @@ def list_delete(id):
     #     return abort(401, decription="Invalid user")
     
     #list = List.query.get(id)
-    list = List.query.filter_by(id=id, user_id=user.id).first()
+    list = List.query.filter_by(id=id, user_id=current_user.id).first()
     if not list:
         return abort(400, description="Not authorized to delete other people's lists")
         
     db.session.delete(list)
     db.session.commit()
-    return jsonify(list_schema.dump(list))
-
+    #return jsonify(list_schema.dump(list))
+    return redirect(url_for('lists.list_index'))
+    
 @lists.route("/<int:id>", methods=["PUT","PATCH"])
 @jwt_required
 def list_update(id):

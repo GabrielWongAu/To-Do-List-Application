@@ -3,7 +3,7 @@
 {% block content%}        
     {% for list in lists %}
         <h3>{{list.name}}</h3>
-        <a href="{{ url_for('lists.list_show', id = list.id) }}" + > More Details</a>
+        <a href="{{ url_for('lists.list_show', id = list.id) }}" > More Details</a>
         <a href="{{ url_for('lists.list_tasks_show', id = list.id) }}"> View tasks</a>
     {% endfor %}
 {% endblock %}

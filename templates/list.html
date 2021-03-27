@@ -3,5 +3,8 @@
 {% block content%}        
         <h3>{{list_individual.name}}</h3>
         <h4>{{list_individual.description}}</h4>
-        <a href ="/lists">Back</a>
+        {% if current_user.is_authenticated and current_user.id == list_individual.user.id %}
+        <p><a href="{{ url_for('lists.list_delete', id=list_individual.id)}}""><button>Delete List</button></a></p>
+        {% endif %}
+        <p><a href ="/lists">Back</a></p>
 {% endblock %}
