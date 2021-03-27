@@ -28,7 +28,8 @@ class ProductionConfig(Config):
         return value
 class TestingConfig(Config):
     TESTING = True
-
+    WTF_CSRF_ENABLED = False
+    
     @property
     def SQLALCHEMY_DATABASE_URI(self):
         value = os.environ.get("DB_URI_TEST")

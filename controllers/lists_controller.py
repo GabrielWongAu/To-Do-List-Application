@@ -4,7 +4,7 @@ from models.User import User
 from main import db
 from schemas.ListSchema import list_schema, lists_schema
 from schemas.TaskSchema import task_schema, tasks_schema
-from flask import Blueprint, request, jsonify, render_template, abort
+from flask import Blueprint, request, jsonify, render_template, abort, redirect, url_for
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from services.auth_service import verify_user
 from flask_login import login_required, current_user
@@ -14,8 +14,8 @@ lists = Blueprint('lists', __name__, url_prefix="/lists")
 @lists.route("/", methods=["GET"])
 def list_index():
     lists = List.query.all()
-    #return jsonify(lists_schema.dump(lists))
-    return render_template("lists_index.html", lists = lists)
+    return jsonify(lists_schema.dump(lists))
+    #return render_template("lists_index.html", lists = lists)
 
 @lists.route("/", methods=["POST"])
 @login_required
@@ -41,8 +41,8 @@ def list_create():
     db.session.add(new_list)
     db.session.commit()
 
-    #return jsonify(list_schema.dump(new_list))
-    return redirect(url_for('lists.list_index'))
+    return jsonify(list_schema.dump(new_list))
+    #return redirect(url_for('lists.list_index'))
 
 # @lists.route("/", methods=["POST"])
 # @jwt_required
@@ -72,17 +72,17 @@ def list_create():
 def list_show(id):
     # SELECT * FROM LISTS WHERE ID = id
     list = List.query.get(id)
-    #return jsonify(list_schema.dump(list))
-    return render_template("list.html", list_individual = list)
+    return jsonify(list_schema.dump(list))
+    #return render_template("list.html", list_individual = list)
 
 @lists.route("/<int:id>/tasks", methods=["GET"])
 def list_tasks_show(id):
     # SELECT * FROM TASKS WHERE LIST_ID = id
     tasks = Task.query.filter_by(list_id=id)
-    #return jsonify(tasks_schema.dump(tasks))
-    return render_template("tasks_index.html", tasks = tasks)
+    return jsonify(tasks_schema.dump(tasks))
+    #return render_template("tasks_index.html", tasks = tasks)
 
-#@lists.route("/<int:id>", methods=["DELETE"])
+# @lists.route("/<int:id>", methods=["DELETE"])
 @lists.route("/delete/<int:id>", methods=["GET"])
 @login_required
 def list_delete(id):
@@ -99,9 +99,9 @@ def list_delete(id):
         
     db.session.delete(list)
     db.session.commit()
-    #return jsonify(list_schema.dump(list))
-    return redirect(url_for('lists.list_index'))
-    
+    return jsonify(list_schema.dump(list))
+    # return redirect(url_for('lists.list_index'))
+
 @lists.route("/<int:id>", methods=["PUT","PATCH"])
 @jwt_required
 def list_update(id):

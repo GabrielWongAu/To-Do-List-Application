@@ -56,7 +56,7 @@ def auth_login():
 
     #print(current_user.username)
     login_user(user)
-    print(current_user.username)
+    # print(current_user.username)
     # expiry = timedelta(days=1)
     # access_token = create_access_token(identity=str(user.id), expires_delta=expiry)
     # return jsonify({"token": access_token})
