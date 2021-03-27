@@ -1,4 +1,4 @@
-from main import db
+from main import db, bcrypt
 from flask import Blueprint
 from datetime import datetime
 
@@ -18,20 +18,36 @@ def create_db():
 def seed_db():
     from models.List import List
     from models.Task import Task
+    from models.User import User
+
+    u1 = User()
+    u1.username = "Gabe"
+    u1.password = bcrypt.generate_password_hash("123456").decode("utf-8")
+    db.session.add(u1)
+
+    u2 = User()
+    u2.username = "Sam"
+    u2.password = bcrypt.generate_password_hash("123456").decode("utf-8")
+    db.session.add(u2)
+
+    db.session.commit()
 
     l1 = List()
     l1.name = "AWS Certified Solutions Architect – Associate Certification"
     l1.description = "List of tasks to help prepare for my upcoming AWS Certified Solutions Architect exam"
+    l1.user_id = 1
     db.session.add(l1)
 
     l2 = List()
     l2.name = "HashiCorp Cloud Engineer Certification - Terraform Associate"
     l2.description = "List of tasks to help prepare for my upcoming Terraform Associate exam"
+    l2.user_id = 1
     db.session.add(l2)
 
     l3 = List()
     l3.name = "CNCF - Certified Kubernetes Administrator (CKA) Certification"
     l3.description = "List of tasks to help prepare for my Certified Kubernetes Administrator exam"
+    l3.user_id = 2
     db.session.add(l3)
 
     db.session.commit()
