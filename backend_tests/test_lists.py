@@ -51,7 +51,7 @@ class TestLists(unittest.TestCase):
         #the response data is a dict
         self.assertIsInstance(data, dict)
         #test a value of the response, as we seeded the data we know that value
-        self.assertEqual(data['name'], "AWS Certified Solutions Architect – Associate Certification")
+        self.assertEqual(data['name'], "AWS Certified Solutions Architect Associate Certification")
     
     def test_post_list_create(self):
        #register and login a user

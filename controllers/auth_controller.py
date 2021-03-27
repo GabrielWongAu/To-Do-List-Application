@@ -76,8 +76,3 @@ def logout():
     logout_user()
     return redirect(url_for('lists.list_index'))
 
-# @auth.route("/users", methods=["GET"])
-# def users_index():
-#     users = User.query.all()
-#     return jsonify(users_schema.dump(users))
-#     #return render_template("lists_index.html", lists = lists)

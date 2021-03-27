@@ -100,7 +100,7 @@ def list_delete(id):
     db.session.delete(list)
     db.session.commit()
     return jsonify(list_schema.dump(list))
-    # return redirect(url_for('lists.list_index'))
+    #return redirect(url_for('lists.list_index'))
 
 @lists.route("/<int:id>", methods=["PUT","PATCH"])
 @jwt_required

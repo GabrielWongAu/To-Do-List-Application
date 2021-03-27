@@ -33,19 +33,19 @@ def seed_db():
     db.session.commit()
 
     l1 = List()
-    l1.name = "AWS Certified Solutions Architect – Associate Certification"
+    l1.name = "AWS Certified Solutions Architect Associate Certification"
     l1.description = "List of tasks to help prepare for my upcoming AWS Certified Solutions Architect exam"
     l1.user_id = 1
     db.session.add(l1)
 
     l2 = List()
-    l2.name = "HashiCorp Cloud Engineer Certification - Terraform Associate"
+    l2.name = "HashiCorp Cloud Engineer Certification Terraform Associate"
     l2.description = "List of tasks to help prepare for my upcoming Terraform Associate exam"
     l2.user_id = 1
     db.session.add(l2)
 
     l3 = List()
-    l3.name = "CNCF - Certified Kubernetes Administrator (CKA) Certification"
+    l3.name = "CNCF Certified Kubernetes Administrator (CKA) Certification"
     l3.description = "List of tasks to help prepare for my Certified Kubernetes Administrator exam"
     l3.user_id = 2
     db.session.add(l3)
@@ -69,7 +69,7 @@ def seed_db():
     db.session.add(t2)
 
     t3 = Task()
-    t3.name = "Learn the Test-taking Strategies for This Exam"
+    t3.name = "Learn the Test taking Strategies for This Exam"
     t3.description = "Find out the different exam strategies for this particular exam"
     # t1.created = datetime.now()
     t3.list_id = 1
@@ -86,14 +86,14 @@ def seed_db():
 
     t5 = Task()
     t5.name = "Use the Terraform CLI (outside of core workflow)"
-    t5.description = "For example, given a scenario: choose when to use terraform fmt to format code"
+    t5.description = "For example given a scenario choose when to use terraform fmt to format code"
     # t5.created = datetime.now()
     t5.list_id = 2
     db.session.add(t5)
 
     t6 = Task()
     t6.name = "Interact with Terraform modules"
-    t6.description = "For example, interact with module inputs and outputs	"
+    t6.description = "For example interact with module inputs and outputs	"
     # t6.created = datetime.now()
     t6.list_id = 2
     db.session.add(t6)
