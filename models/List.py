@@ -7,3 +7,4 @@ class List(db.Model):
     name = db.Column(db.String(), nullable=False)
     description = db.Column(db.String())
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    tasks = db.relationship("Task", backref="List", cascade="all, delete")
