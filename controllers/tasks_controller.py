@@ -3,6 +3,7 @@ from datetime import datetime
 from main import db
 from schemas.TaskSchema import task_schema, tasks_schema
 from flask import Blueprint, request, jsonify, render_template
+from flask_jwt_extended import jwt_required
 
 tasks = Blueprint('tasks', __name__, url_prefix="/tasks")
 

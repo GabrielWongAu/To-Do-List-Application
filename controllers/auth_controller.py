@@ -3,6 +3,9 @@ from schemas.UserSchema import user_schema
 from main import db
 from flask import Blueprint, request, jsonify, abort
 from main import bcrypt
+from flask_jwt_extended import create_access_token
+from datetime import timedelta
+
 auth = Blueprint('auth', __name__, url_prefix="/auth")
 
 @auth.route("/signup", methods=["POST"])
@@ -36,4 +39,6 @@ def auth_login():
     if not bcrypt.check_password_hash(user.password, user_fields["password"]):
         return abort(401, description="Incorrect password")
 
-    return "token"
+    expiry = timedelta(days=1)
+    access_token = create_access_token(identity=str(user.id), expires_delta=expiry)
+    return jsonify({"token": access_token})

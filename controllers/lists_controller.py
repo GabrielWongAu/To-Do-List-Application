@@ -4,6 +4,7 @@ from main import db
 from schemas.ListSchema import list_schema, lists_schema
 from schemas.TaskSchema import task_schema, tasks_schema
 from flask import Blueprint, request, jsonify, render_template
+from flask_jwt_extended import jwt_required
 
 lists = Blueprint('lists', __name__, url_prefix="/lists")
 
@@ -14,6 +15,7 @@ def list_index():
     return render_template("lists_index.html", lists = lists)
 
 @lists.route("/", methods=["POST"])
+@jwt_required
 def list_create():
     list_fields = list_schema.load(request.json)
 
@@ -43,6 +45,7 @@ def list_tasks_show(id):
     return render_template("tasks_index.html", tasks = tasks)
 
 @lists.route("/<int:id>", methods=["DELETE"])
+@jwt_required
 def list_delete(id):
     list = List.query.get(id)
     db.session.delete(list)
@@ -50,6 +53,7 @@ def list_delete(id):
     return jsonify(list_schema.dump(list))
 
 @lists.route("/<int:id>", methods=["PUT","PATCH"])
+@jwt_required
 def list_update(id):
     lists = List.query.filter_by(id=id)
     list_fields = list_schema.load(request.json)
