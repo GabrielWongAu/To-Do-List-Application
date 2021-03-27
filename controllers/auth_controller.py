@@ -23,3 +23,17 @@ def auth_register():
     db.session.commit()
 
     return jsonify(user_schema.dump(user))
+
+@auth.route("/login", methods=["POST"])
+def auth_login():
+    user_fields = user_schema.load(request.json)
+
+    user = User.query.filter_by(username=user_fields["username"]).first()
+
+    # Do not login if the user does not exist
+    if not user:
+        return abort(401, description="Incorrect username")
+    if not bcrypt.check_password_hash(user.password, user_fields["password"]):
+        return abort(401, description="Incorrect password")
+
+    return "token"
