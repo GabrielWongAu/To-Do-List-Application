@@ -2,7 +2,7 @@ from models.User import User
 from schemas.UserSchema import user_schema
 from main import db
 from flask import Blueprint, request, jsonify, abort
-
+from main import bcrypt
 auth = Blueprint('auth', __name__, url_prefix="/auth")
 
 @auth.route("/signup", methods=["POST"])
@@ -17,7 +17,7 @@ def auth_register():
     
     user = User()
     user.username = user_fields["username"]
-    user.password = user_fields["password"]
+    user.password = bcrypt.generate_password_hash(user_fields["password"]).decode("utf-8")
 
     db.session.add(user)
     db.session.commit()
