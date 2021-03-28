@@ -7,10 +7,10 @@ class Config(object):
 
     @property
     def SQLALCHEMY_DATABASE_URI(self):
-        value = os.environ.get("DB_URI")
+        value = os.environ.get("DATABASE_URL")
 
         if not value:
-            raise ValueError("DB_URI is not set")
+            raise ValueError("DATABASE_URL is not set")
 
         return value
 
@@ -32,10 +32,10 @@ class TestingConfig(Config):
     
     @property
     def SQLALCHEMY_DATABASE_URI(self):
-        value = os.environ.get("DB_URI_TEST")
+        value = os.environ.get("DATABASE_URL_TEST")
 
         if not value:
-            raise ValueError("DB_URI_TEST is not set")
+            raise ValueError("DATABASE_URL_TEST is not set")
 
         return value
 
