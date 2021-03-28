@@ -46,8 +46,8 @@ def create_app():
     for controller in registerable_controllers:
         app.register_blueprint(controller)
 
-    from commands import create_tables
-    app.cli.add_command(create_tables)
+    # from commands import create_tables
+    # app.cli.add_command(create_tables)
     
     with app.app_context():
         db.create_all()
