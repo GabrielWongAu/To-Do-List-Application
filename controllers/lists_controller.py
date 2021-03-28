@@ -1,9 +1,7 @@
 from models.List import List
-from models.Task import Task
 from models.User import User
 from main import db
 from schemas.ListSchema import list_schema, lists_schema
-from schemas.TaskSchema import task_schema, tasks_schema
 from flask import Blueprint, request, jsonify, render_template, abort, redirect, url_for
 # from flask_jwt_extended import jwt_required, get_jwt_identity
 # from services.auth_service import verify_user
@@ -26,11 +24,6 @@ def list_create():
 
     list = List.query.filter_by(user_id=current_user.id).first()
 
-    if list:
-        return abort(400, description= "Not authorised to create more than one list")
-
-    #list_fields = list_schema.load(request.json)
-
     # create a new List object, with the data received in the request
     new_list = List()
     new_list.name = name
@@ -44,43 +37,12 @@ def list_create():
     #return jsonify(list_schema.dump(new_list))
     return redirect(url_for('lists.list_index'))
 
-# @lists.route("/", methods=["POST"])
-# @jwt_required
-# @verify_user
-# def list_create():
-
-#     list = List.query.filter_by(user_id=user.id).first()
-
-#     if not list:
-#         return abort(400, description= "Not authorized, you need to create a list first")
-
-#     list_fields = list_schema.load(request.json)
-
-#     # create a new List object, with the data received in the request
-#     new_list = List()
-#     new_list.name = list_fields["name"]
-#     new_list.description = list_fields["description"]
-#     new_list.user_id = user.id
-
-#     #add a new list to the db
-#     db.session.add(new_list)
-#     db.session.commit()
-
-#     return jsonify(list_schema.dump(new_list))
-
 @lists.route("/<int:id>", methods=["GET"])
 def list_show(id):
     # SELECT * FROM LISTS WHERE ID = id
     list = List.query.get(id)
     #return jsonify(list_schema.dump(list))
     return render_template("list.html", list_individual = list)
-
-@lists.route("/<int:id>/tasks", methods=["GET"])
-def list_tasks_show(id):
-    # SELECT * FROM TASKS WHERE LIST_ID = id
-    tasks = Task.query.filter_by(list_id=id)
-    #return jsonify(tasks_schema.dump(tasks))
-    return render_template("tasks_index.html", tasks = tasks)
 
 # @lists.route("/<int:id>", methods=["DELETE"])
 @lists.route("/delete/<int:id>", methods=["GET"])
