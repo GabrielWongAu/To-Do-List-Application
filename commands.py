@@ -2,7 +2,7 @@ from main import db, bcrypt
 from flask import Blueprint
 from datetime import datetime
 
-db_commands = Blueprint("db", __name__)
+db_commands = Blueprint("db-custom", __name__)
 
 @db_commands.cli.command("create")
 def create_db():

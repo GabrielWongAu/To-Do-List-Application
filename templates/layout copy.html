@@ -12,10 +12,8 @@
         </title>
     </head>
 
-    <body class="bg-white">
-    <div class="container-sm" style="max-width:700">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="/lists">To Do List Application </a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">To Do List Application </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -47,20 +45,30 @@
           </ul>
         </div>
       </nav>
-    </div>
-    </body>
 
-        <div class="pb-2 pt-4 pr-4 pl-4">
+    <body>
+        <header>
+            <!-- <h1>To Do List Application </h1>
+            <nav>
+                <a href="/lists">Home</a>
+                <a href="/tasks">View all Tasks</a>
+                {% if current_user.is_authenticated %}
+                <a href="/lists/new">Create a New List</a>
+                <a>{{ current_user.username }}</a>
+                <a href="/logout">Log out</a>
+                {% else %}
+                <a href="/signup">Sign up</a>
+                <a href="/login">Log in</a>
+                {% endif %}
+            </nav> -->
+        </header>
+        <div>
             {% block content%}        
+
 
             {% endblock %}
         </div>
         <br>
-        <hr>
-        <div id="footer">
-            <div class="container text-center">
-              <p class="text-muted credit" style="color:#fff">Made with &lt;3</p>
-            </div>
-        </div>             
+        <footer>Made with &lt;3 </footer>
     </body>
 </html>
