@@ -1,8 +1,15 @@
+import click
+from flask.cli import with_appcontext
 from main import db, bcrypt
 from flask import Blueprint
 from datetime import datetime
 
 db_commands = Blueprint("db-custom", __name__)
+
+@click.command(name='create_tables')
+@with_appcontext
+def create_tables():
+    db.create_all()
 
 @db_commands.cli.command("create")
 def create_db():
