@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div>
+        <h3>Update List</h3>
+        <div>
+            <form action="{{ url_for('lists.list_update', id=list.id) }}" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                <p><input type="text" name="name" value="{{ list.name }}" placeholder="Name" autofocus=""></p>
+                <p><input type="text" name="description" value="{{ list.description }}" placeholder="Description"></p>
+                <p><button type="submit" class="btn btn-sm btn-outline-dark">Update List</button></p>
+            </form>
+            <a href="lists_index.html"><button type="submit" class="btn btn-sm btn-outline-dark">Cancel</button></a>
+        </div>
+    </div>
+{% endblock %}

@@ -7,8 +7,8 @@
             <form action="{{ url_for('lists.list_create') }}" method="POST">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                 <p><input type="text" name="name" placeholder="Name" autofocus=""></p>
-                <p><input type="description" name="Description" placeholder="Description"></p>
-                <button>Create List</button>
+                <p><input type="description" name="description" placeholder="Description"></p>
+                <button type="submit" class="btn btn-sm btn-outline-dark">Create List</button>
             </form>
         </div>
     </div>

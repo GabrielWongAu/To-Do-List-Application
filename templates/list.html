@@ -2,9 +2,12 @@
 
 {% block content%}        
         <h3>{{list_individual.name}}</h3>
-        <h4>{{list_individual.description}}</h4>
+        <p><h4>{{list_individual.description}}</h4></p>
         {% if current_user.is_authenticated and current_user.id == list_individual.user.id %}
-        <p><a href="{{ url_for('lists.list_delete', id=list_individual.id)}}""><button>Delete List</button></a></p>
+        <p>
+            <a href="{{ url_for('lists.list_delete', id=list_individual.id)}}"><button type="submit" class="btn btn-sm btn-outline-dark">Delete List</button></a>
+            <a href="{{ url_for('lists.modify_list', id=list_individual.id) }}"><button type="submit" class="btn btn-sm btn-outline-dark">Update List</button></a>
+        </p>        
         {% endif %}
         <p><a href ="/lists">Back</a></p>
 {% endblock %}

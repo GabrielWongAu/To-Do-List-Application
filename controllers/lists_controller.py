@@ -102,16 +102,29 @@ def list_delete(id):
     #return jsonify(list_schema.dump(list))
     return redirect(url_for('lists.list_index'))
 
-@lists.route("/<int:id>", methods=["PUT","PATCH"])
-@jwt_required
+#@jwt_required
+@lists.route("/update/<int:id>", methods=["POST"])
+@login_required
 def list_update(id):
-    lists = List.query.filter_by(id=id)
-    list_fields = list_schema.load(request.json)
-    lists.update(list_fields)
-    db.session.commit()
-    return jsonify(list_schema.dump(lists[0]))
+    #make sure the selected list is owned by the logged in user
+    list = List.query.filter_by(id=id, user_id=current_user.id).first()
+    if not list:
+        return abort(400, description="Not authorized to delete other people's list")
+    
+    #start updating the values of the list according to the form
+    list.name = request.form.get("name")
+    list.description = request.form.get("description")
 
+    #save the changes
+    db.session.commit()
+    #return jsonify(list_schema.dump(lists[0]))
+    return redirect(url_for('lists.list_index'))
 
 @lists.route("/new", methods=["GET"])
 def new_list():
     return render_template("new_list.html")
+
+@lists.route("/modify/<int:id>", methods=["GET"])
+def modify_list(id):
+    list = list = List.query.get(id)
+    return render_template("modify_list.html", list=list)
