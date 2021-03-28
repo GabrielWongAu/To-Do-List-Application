@@ -50,6 +50,6 @@ def create_app():
     app.cli.add_command(create_tables)
     
     with app.app_context():
-        init_db()
+        db.create_all()
 
     return app
