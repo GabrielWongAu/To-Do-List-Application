@@ -2,7 +2,7 @@
 
 {% block content%}
 <h2>Tasks</h2>        
-    {% for task in tasks %}
+    {% for task in tasks_render %}
         <h3>{{task.name}}</h3>
         <h4>{{task.description}}</h4>
         <h4>{{task.creation}}</h4>

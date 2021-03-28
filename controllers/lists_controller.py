@@ -5,8 +5,8 @@ from main import db
 from schemas.ListSchema import list_schema, lists_schema
 from schemas.TaskSchema import task_schema, tasks_schema
 from flask import Blueprint, request, jsonify, render_template, abort, redirect, url_for
-from flask_jwt_extended import jwt_required, get_jwt_identity
-from services.auth_service import verify_user
+# from flask_jwt_extended import jwt_required, get_jwt_identity
+# from services.auth_service import verify_user
 from flask_login import login_required, current_user
 
 lists = Blueprint('lists', __name__, url_prefix="/lists")
