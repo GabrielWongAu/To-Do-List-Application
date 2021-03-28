@@ -9,6 +9,7 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect
 from flask_migrate import Migrate  
+from flask.cli import with_appcontext
 
 db = SQLAlchemy()
 mar = Marshmallow()
@@ -47,5 +48,8 @@ def create_app():
 
     from commands import create_tables
     app.cli.add_command(create_tables)
+    
+    with app.app_context():
+        init_db()
 
     return app
