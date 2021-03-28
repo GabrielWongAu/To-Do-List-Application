@@ -1,9 +1,9 @@
 {% extends "layout.html" %}
 
 {% block content%}     
-<h2>Lists</h2>   
     {% for list in lists %}
-        <h3>{{list.name}}</h3>
-        <a href="{{ url_for('lists.list_show', id = list.id) }}" > More Details</a>
+        <h5>{{list.name}}</h5>
+        <a href="{{ url_for('lists.list_show', id = list.id) }}"> More Details</a>
+        <p>
     {% endfor %}
 {% endblock %}

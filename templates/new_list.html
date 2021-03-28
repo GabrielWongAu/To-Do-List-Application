@@ -3,11 +3,13 @@
 {% block content %}
     <div>
         <h3>Create List</h3>
+        <p></p>
         <div>
             <form action="{{ url_for('lists.list_create') }}" method="POST">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                 <p><input type="text" name="name" placeholder="Name" autofocus=""></p>
                 <p><input type="description" name="description" placeholder="Description"></p>
+                <p></p>
                 <button type="submit" class="btn btn-sm btn-outline-dark">Create List</button>
             </form>
         </div>
