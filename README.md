@@ -4,13 +4,9 @@ The purpose of the To Do List Application is to help developers to prioritize th
 
 The website is targeted at developers who want a public to do list that they can share with their colleagues.  It is open to the public to read your lists, however you will need to sign up for an account in order to post your own list. You can only delete and edit your own lists.
 
-<br>
-
 # Links
 * [Deployed Website](http://www.todolistflask.ml/)
 * [Github Repo](https://github.com/GabrielWongAu/To-Do-List-Application)
-
-<br>
 
 # How to install this app
 ### How to setup the Flask application & PostgreSQL Database
@@ -241,6 +237,11 @@ The website is targeted at developers who want a public to do list that they can
 
 ![Trello Screenshot 11](./docs/TrelloScreenshot11.png) 
 
+**Day 6** 
+
+![Trello Screenshot 10](./docs/TrelloScreenshot12.png) 
+
+![Trello Screenshot 11](./docs/TrelloScreenshot13.png) 
 
 ### **Requirement 8 b): Provides evidence of user testing in the development environment**
 
