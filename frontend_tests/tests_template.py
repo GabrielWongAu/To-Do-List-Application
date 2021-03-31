@@ -17,7 +17,7 @@ class TestLists(unittest.TestCase):
         db.create_all()
 
         runner = cls.app.test_cli_runner()
-        runner.invoke(args=["db", "seed"])
+        runner.invoke(args=["db-custom", "seed"])
 
     #runs after all the tests, removes the tables and stops the app
     @classmethod
@@ -35,10 +35,8 @@ class TestLists(unittest.TestCase):
         lists = List.query.all()
         #print(lists[0].name)
         self.assertEqual(response.status_code, 200)
-        #test if we have the title of the html in the content of the response
-        self.assertIn("Lists", str(response.data))
         #test content from the layout
-        self.assertIn("HashiCorp Cloud Engineer Certification Terraform Associate", str(response.data))
+        self.assertIn("Prepare for HashiCorp Cloud Engineer Certification Terraform Associate", str(response.data))
         #test if the html contains the names and descriptions of the lists
         self.assertIn(lists[1].name, str(response.data))
         self.assertIn(lists[2].name, str(response.data))

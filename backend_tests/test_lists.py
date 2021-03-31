@@ -17,7 +17,7 @@ class TestLists(unittest.TestCase):
         db.create_all()
 
         runner = cls.app.test_cli_runner()
-        runner.invoke(args=["db", "seed"])
+        runner.invoke(args=["db-custom", "seed"])
 
     #runs after all the tests, removes the tables and stops the app
     @classmethod
@@ -51,7 +51,7 @@ class TestLists(unittest.TestCase):
         #the response data is a dict
         self.assertIsInstance(data, dict)
         #test a value of the response, as we seeded the data we know that value
-        self.assertEqual(data['name'], "AWS Certified Solutions Architect Associate Certification")
+        self.assertEqual(data['name'], "Prepare for AWS Certified Solutions Architect Associate Certification")
     
     def test_post_list_create(self):
        #register and login a user
@@ -88,8 +88,8 @@ class TestLists(unittest.TestCase):
         self.assertIsNotNone(list)
         self.assertEqual(list.name, "Greatest dev project")
     
-    #POST method in /lists not allowed
-    def test_post_list_create_not_allowed(self):
+    #POST method in /lists allowed
+    def test_post_list_create_allowed(self):
         #login the user that already owns a list
         response = self.client.post('/auth/login', data={
             'username': 'Gabe',
@@ -107,8 +107,8 @@ class TestLists(unittest.TestCase):
         response = self.client.post("lists/",
         data = list_data)
 
-        #test a 400 status, a user that already has a list cannot post a new one
-        self.assertEqual(response.status_code, 400)
+        #test a 200 status, a user that already has a list can post a new one
+        self.assertEqual(response.status_code, 200)
 
     # #DELETE method in lists/id, not allowed to delete
     def test_delete_list_not_allowed(self):
@@ -132,7 +132,7 @@ class TestLists(unittest.TestCase):
         #test a 400 status, a user is not the owner of the list cannot delete it
         self.assertEqual(response.status_code, 400)
 
-    # #DELETE method on /lists/id allowed
+    # DELETE method on /lists/id allowed
     def test_delete_list_allowed(self):
         #login a user that already exists and get the token
         #login the user that already owns a list

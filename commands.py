@@ -40,7 +40,7 @@ def seed_db():
 
     l1 = List()
     l1.name = "Prepare for AWS Certified Solutions Architect Associate Certification"
-    l1.description = "Deep dive into Amazon VPC, deep dive into Amazon Lambda and Serverless components & learn the test taking strategies for This Exam"
+    l1.description = "Deep dive into Amazon VPC deep dive into Amazon Lambda and Serverless components learn the test taking strategies for This Exam"
     l1.user_id = 1
     db.session.add(l1)
 
